@@ -1,22 +1,36 @@
-import React from 'react';
-import Son from './Son'
-import Daughter from './Daughter'
+import React from "react";
+import Son from "./Son";
+import Daughter from "./Daughter";
 
-class Mum extends React.Component {
+class Dad extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { sonDinner: "unknown", daughterDinner: "unknown" };
+  }
 
-talktoChildren(child, dinner) {
-	
+  talkToSon(meal) {
+    this.setState({
+      sonDinner: meal
+    });
+  }
+  talkToDaughter(meal) {
+    this.setState({
+      daughterDinner: meal
+    });
+  }
+  render() {
+    return (
+      <React.Fragment>
+        <p>I am Dad. My son wants {this.state.sonDinner} for dinner</p>
+        <p>My daughter wants {this.state.daughterDinner} for dinner</p>
+        <Daughter
+          talkToDad={meal => this.talkToDaughter(meal)}
+          brother={this.state.sonDinner}
+        />
+        <Son talkToDad={meal => this.talkToSon(meal)} dadName="Adriana" />
+      </React.Fragment>
+    );
+  }
 }
-	render() {
-		return (
-			<React.Fragment>
-				<Son talktoMum={()=> this.talktoChildren}>
-				</Son>
-				<Daughter talktoMum={()=> this.talktoChildren}>
-				</Daughter>
-			</React.Fragment>
-		)
-	}
-}
 
-export default Mum;
+export default Dad;

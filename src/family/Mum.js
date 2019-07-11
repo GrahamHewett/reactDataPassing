@@ -3,23 +3,34 @@ import Son from './Son'
 import Daughter from './Daughter'
 
 class Mum extends React.Component {
-	constructor() {
-		super()
-		this.state.dinner = {son: 'unknown', daughter: 'unknown'}
+	constructor(props) {
+		super(props)
+		this.state = {'sonDinner': 'unknown', 'daughterDinner': 'unknown'}
 	}
 
-talktoChildren(child, dinner) {
+talkToSon(meal) {
+	this.setState({
+		sonDinner: meal
+	});
+}
+talkToDaughter(meal) {
+	this.setState({
+		'daughterDinner': meal
+	});
 
 }
 	render() {
 		return (
 			<React.Fragment>
-				<Son talktoMum={this.talktoChildren}>
+				{console.log(this.state.dinner)}
+				<div><p>My son wants {this.state.sonDinner} for dinner</p>
+				</div>
+				<Son talkToMum={(meal) => this.talkToSon(meal)}
+				mumName="Adriana">
 				</Son>
-				<p>My son wants {this.state.dinner.son} for dinner</p>
-				<Daughter talktoMum={this.talktoChildren}>
+				<p>My daughter wants {this.state.daughterDinner} for dinner</p>
+				<Daughter talkToMum={(meal) => this.talkToDaughter(meal)}>
 				</Daughter>
-				<p>My daughter wants {this.state.dinner.son} for dinner</p>
 			</React.Fragment>
 		)
 	}
